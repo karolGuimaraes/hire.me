@@ -39,11 +39,10 @@ def retrieve_url(request):
     try:
         short_url = request.GET.get('url', False)
         if short_url:
-            url = Url.objects.filter(short_url=short_url)
+            url = Url.objects.filter(short_url=short_url)[0]
             if url:
-                url[0].new_access
-                print(url[0].accesses)
-                return HttpResponseRedirect(redirect_to=url[0].original_url)
+                url.new_access
+                return HttpResponseRedirect(redirect_to=url.original_url)
             else:
                 return JsonResponse({'err_code':'002', 'description': 'SHORTENED URL NOT FOUND'}, status=400)
         else:
@@ -55,11 +54,11 @@ def retrieve_url(request):
 @api_view(['GET'])
 def visited_url(request):
     try:
-        urls = Url.objects.all().order_by('-accesses')[0:10]
+        urls = Url.objects.filter(accesses__gte=1).order_by('-accesses')[0:10]
         if urls:
             data = list( urls.values('original_url', 'short_url', 'custom_alias', 'accesses') ) 
             return JsonResponse(data, safe=False, status=200)
         else:
-           return JsonResponse({'url': short_url, 'err_code':'003', 'description': 'URL is required'}, status=400) 
+           return JsonResponse({'err_code':'004', 'description': 'No url registered'}, status=400) 
     except:
         return JsonResponse({'Error':'Internal server error :('}, status=500)
