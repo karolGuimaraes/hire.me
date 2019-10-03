@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('create/', views.create_shortener, name='create_shortener'),
+    path('', views.retrieve_url, name='retrieve_url'),
 ]

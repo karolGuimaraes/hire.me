@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from shortener_url.models import Url
 import hashlib
 import time
@@ -8,7 +8,6 @@ import time
 
 @api_view(['POST'])
 def create_shortener(request):
-    
     try:
         url = request.data.get('url', False)
         if url:
@@ -29,6 +28,23 @@ def create_shortener(request):
                                     'alias': custom_alias, 
                                     'statistics': {"time_taken": "{} ms".format( end-start ) } }, status=200)
         else:
-            return JsonResponse({'url': url, 'err_code':'003', 'description': 'URL isrequired'}, status=400)
+            return JsonResponse({'url': url, 'err_code':'003', 'description': 'URL is required'}, status=400)
     except:
         return JsonResponse({'Error':'Internal server error :('}, status=500)
+
+
+@api_view(['GET'])
+def retrieve_url(request):
+    try:
+        short_url = request.GET.get('url', False)
+        if short_url:
+            url = Url.objects.filter(short_url=short_url)
+            if url:
+                return HttpResponseRedirect(redirect_to=url[0].original_url)
+            else:
+                return JsonResponse({'err_code':'002', 'description': 'SHORTENED URL NOT FOUND'}, status=400)
+        else:
+           return JsonResponse({'url': short_url, 'err_code':'003', 'description': 'URL is required'}, status=400) 
+    except:
+        return JsonResponse({'Error':'Internal server error :('}, status=500)
+
