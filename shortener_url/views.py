@@ -13,9 +13,8 @@ def create_shortener(request):
         url = request.data.get('url', False)
         if url:
             custom_alias = request.data.get('CUSTOM_ALIAS', False)
-            
             if custom_alias and Url.objects.filter(custom_alias=custom_alias):
-                return JsonResponse({'alias': custom_alias, 'err_code':'001', 'description': 'CUSTOM ALIAS ALREADY EXISTS'}, status=400)
+                return JsonResponse({'alias': custom_alias, 'err_code':'001', 'description': 'CUSTOM ALIAS ALREADY EXISTS'}, status=409)
             else:
                 start = time.time()
                 if custom_alias:
@@ -27,7 +26,7 @@ def create_shortener(request):
                 end = time.time()
                 return JsonResponse({'url': short_url, 
                                     'alias': custom_alias, 
-                                    'statistics': {"time_taken": "{} ms".format( end-start ) } }, status=200)
+                                    'statistics': {"time_taken": "{} ms".format( end-start ) } }, status=201)
         else:
             return JsonResponse({'url': url, 'err_code':'003', 'description': 'URL is required'}, status=400)
     except:
@@ -39,12 +38,12 @@ def retrieve_url(request):
     try:
         short_url = request.GET.get('url', False)
         if short_url:
-            url = Url.objects.filter(short_url=short_url)[0]
+            url = Url.objects.filter(short_url=short_url)
             if url:
-                url.new_access
-                return HttpResponseRedirect(redirect_to=url.original_url)
+                url[0].new_access
+                return HttpResponseRedirect(redirect_to=url[0].original_url)
             else:
-                return JsonResponse({'err_code':'002', 'description': 'SHORTENED URL NOT FOUND'}, status=400)
+                return JsonResponse({'err_code':'002', 'description': 'SHORTENED URL NOT FOUND'}, status=404)
         else:
            return JsonResponse({'url': short_url, 'err_code':'003', 'description': 'URL is required'}, status=400) 
     except:
@@ -59,6 +58,6 @@ def visited_url(request):
             data = list( urls.values('original_url', 'short_url', 'custom_alias', 'accesses') ) 
             return JsonResponse(data, safe=False, status=200)
         else:
-           return JsonResponse({'err_code':'004', 'description': 'No url registered'}, status=400) 
+           return JsonResponse({'err_code':'004', 'description': 'No url registered'}, status=204) 
     except:
         return JsonResponse({'Error':'Internal server error :('}, status=500)
