@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 COPY . /env/
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
