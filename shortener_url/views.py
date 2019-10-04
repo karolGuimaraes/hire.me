@@ -1,10 +1,8 @@
-from django.shortcuts import render
 from rest_framework.decorators import api_view
 from django.http import JsonResponse, HttpResponseRedirect
 from shortener_url.models import Url
 import hashlib
 import time
-from django.core import serializers
 
 
 @api_view(['POST'])
@@ -53,7 +51,7 @@ def retrieve_url(request):
 @api_view(['GET'])
 def visited_url(request):
     try:
-        urls = Url.objects.filter(accesses__gte=1).order_by('-accesses')[0:10]
+        urls = Url.objects.filter(accesses__gte=1).order_by('-accesses')[:10]
         if urls:
             data = list( urls.values('original_url', 'short_url', 'custom_alias', 'accesses') ) 
             return JsonResponse(data, safe=False, status=200)

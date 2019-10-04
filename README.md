@@ -87,3 +87,55 @@ Não há requerimentos específicos para linguagens, somos poliglotas. Utilize a
 3. Crie um *client* para chamar sua API
 4. Faça um diagrama de sequencia da implementação feita nos casos de uso (Dica, use o https://www.websequencediagrams.com/)
 5. Monte um deploy da sua solução utilizando containers 
+
+
+
+
+# Solução proposta
+
+### Configurando
+ - Clonar o projeto: git clone https://github.com/karolGuimaraes/hire.me.git
+ - Acesse a pasta /hire.me
+ - Executar:  `$ docker-compose up`
+ - Executar:  `$ docker-compose run api python manage.py makemigrations`
+ - Executar:  `$ docker-compose run api python manage.py migrate`
+
+
+### Funcionamento
+
+Acessando ( http://localhost:8000/ ), onde:
+
+- ` POST /create `  Criar a url encurtada :
+    - CUSTOM_ALIAS é opcional
+
+	- Envio:
+		{
+            "url": "http://www.google.com.br", 
+            "CUSTOM_ALIAS": ""
+        }
+
+
+
+- ` GET /?url=http://shortener/u/google ` Redireciona para a url original: 
+
+
+- ` GET /visited ` Retorna as 10 urls mais visitadas:
+
+
+
+### Teste
+
+Para executa os teste unitários: 
+
+`$ docker-compose run app python manage.py test`
+
+Resposta similar:
+
+			Creating test database for alias 'default'...
+            System check identified no issues (0 silenced).
+            ........
+            ----------------------------------------------------------------------
+            Ran 8 tests in 0.037s
+
+            OK
+            Destroying test database for alias 'default'...
