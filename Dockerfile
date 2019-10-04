@@ -5,3 +5,6 @@ WORKDIR /env
 ADD requirements.txt /env/
 RUN pip install -r requirements.txt
 COPY . /env/
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
