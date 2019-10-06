@@ -28,7 +28,6 @@ def create_shortener(request):
         else:
             return JsonResponse({'url': url, 'err_code':'003', 'description': 'URL is required'}, status=400)
     except Exception as error:
-        print(error)
         return JsonResponse({'Error':'Internal server error :('}, status=500)
 
 

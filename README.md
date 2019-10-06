@@ -127,7 +127,7 @@ Acessando ( http://localhost:8000/ ), onde:
 
 Para executa os teste unitários: 
 
-`$ docker-compose run app python manage.py test`
+`$ docker-compose run api python manage.py test`
 
 Resposta similar:
 
@@ -135,7 +135,8 @@ Resposta similar:
             System check identified no issues (0 silenced).
             ........
             ----------------------------------------------------------------------
-            Ran 8 tests in 0.037s
+            Ran 8 tests in 150.843s
 
             OK
             Destroying test database for alias 'default'...
+
