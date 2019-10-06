@@ -7,7 +7,7 @@ import json
 class TestShortenerUrl(TestCase):
 
     def setUp(self):
-        Url.objects.create(original_url="https://web.whatsapp.com/", custom_alias="whatsapp", short_url="http://shortener/u/whatsapp")
+        Url.objects.create(original_url="https://web.whatsapp.com/", custom_alias="whatsapp", shortened_url="http://shortener/u/whatsapp")
 
 
     def test_shortener_alias(self):
@@ -49,7 +49,7 @@ class TestShortenerUrl(TestCase):
 class TestRetrieveUrl(TestCase):
 
     def setUp(self):
-        Url.objects.create(original_url="https://web.whatsapp.com/", custom_alias="whatsapp", short_url="http://shortener/u/whatsapp")
+        Url.objects.create(original_url="https://web.whatsapp.com/", custom_alias="whatsapp", shortened_url="http://shortener/u/whatsapp")
 
 
     def test_retrieve_url(self):
@@ -67,8 +67,8 @@ class TestRetrieveUrl(TestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
 
-class TestSVisitedUrl(TestCase):
+class TestTopVisitedUrl(TestCase):
 
-    def test_visited_url(self):
-        response = self.client.get('/visited')
+    def test_top_visited_url(self):
+        response = self.client.get('/top_visited')
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code)
