@@ -27,7 +27,8 @@ def create_shortener(request):
                                     'statistics': {"time_taken": "{} ms".format( end-start ) } }, status=201)
         else:
             return JsonResponse({'url': url, 'err_code':'003', 'description': 'URL is required'}, status=400)
-    except:
+    except Exception as error:
+        print(error)
         return JsonResponse({'Error':'Internal server error :('}, status=500)
 
 
