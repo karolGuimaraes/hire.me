@@ -97,8 +97,6 @@ Não há requerimentos específicos para linguagens, somos poliglotas. Utilize a
  - Clonar o projeto: git clone https://github.com/karolGuimaraes/hire.me.git
  - Acesse a pasta /hire.me
  - Executar:  `$ docker-compose up`
- - Executar:  `$ docker-compose run api python manage.py makemigrations`
- - Executar:  `$ docker-compose run api python manage.py migrate`
 
 
 ### Funcionamento
