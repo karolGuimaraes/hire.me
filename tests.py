@@ -53,17 +53,17 @@ class TestRetrieveUrl(TestCase):
 
 
     def test_retrieve_alias(self):
-        response = self.client.get('retrieve/whatsapp')
+        response = self.client.get('/retrieve/whatsapp')
         self.assertEqual(status.HTTP_302_FOUND, response.status_code)
 
 
     def test_retrieve_url_not_found(self):
-        response = self.client.get('retrieve/gmail').json()
+        response = self.client.get('/retrieve/gmail').json()
         self.assertEqual('002', response['err_code'])
 
 
     def test_retrieve_without_alias(self):
-        response = self.client.get('retrieve/')
+        response = self.client.get('/retrieve/')
         self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
 
