@@ -103,22 +103,24 @@ Não há requerimentos específicos para linguagens, somos poliglotas. Utilize a
 
 Acessando ( http://localhost:8000/ ), onde:
 
-- ` POST /create `  Criar a url encurtada :
+- ` POST /create `  Criar a url encurtada:
     - CUSTOM_ALIAS é opcional
 
 	- Envio:
 		{
             "url": "http://www.google.com.br", 
-            "CUSTOM_ALIAS": ""
+            "CUSTOM_ALIAS": "google"
         }
 
 
 
-- ` GET /?url=http://shortener/u/google ` Redireciona para a url original: 
+- ` GET retrieve/google ` Redireciona para a url original: 
 
 
-- ` GET /visited ` Retorna as 10 urls mais visitadas:
+- ` GET /top_visited ` Retorna as 10 urls mais visitadas:
 
+
+- ` GET /urls ` Retorna todas as urls:
 
 
 ### Teste

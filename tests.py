@@ -52,19 +52,19 @@ class TestRetrieveUrl(TestCase):
         Url.objects.create(original_url="https://web.whatsapp.com/", custom_alias="whatsapp", shortened_url="http://shortener/u/whatsapp")
 
 
-    def test_retrieve_url(self):
-        response = self.client.get('/?url=http://shortener/u/whatsapp')
+    def test_retrieve_alias(self):
+        response = self.client.get('retrieve/whatsapp')
         self.assertEqual(status.HTTP_302_FOUND, response.status_code)
 
 
     def test_retrieve_url_not_found(self):
-        response = self.client.get('/?url=http://shortener/u/gmail').json()
+        response = self.client.get('retrieve/gmail').json()
         self.assertEqual('002', response['err_code'])
 
 
-    def test_retrieve_without_url(self):
-        response = self.client.get('/')
-        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
+    def test_retrieve_without_alias(self):
+        response = self.client.get('retrieve/')
+        self.assertEqual(status.HTTP_404_NOT_FOUND, response.status_code)
 
 
 class TestTopVisitedUrl(TestCase):

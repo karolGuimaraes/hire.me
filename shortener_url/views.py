@@ -31,18 +31,17 @@ def create_shortener(request):
 
 
 @api_view(['GET'])
-def retrieve_url(request):
+def retrieve_url(request, custom_alias=None):
     try:
-        shortened_url = request.GET.get('url', False)
-        if shortened_url:
-            url = Url.objects.filter(shortened_url=shortened_url)
+        if custom_alias:
+            url = Url.objects.filter(custom_alias=custom_alias)
             if url:
                 url[0].new_access
                 return HttpResponseRedirect(redirect_to=url[0].original_url)
             else:
-                return JsonResponse({'url': shortened_url, 'err_code':'002', 'description': 'SHORTENED URL NOT FOUND.'}, status=404)
+                return JsonResponse({'alias': alias, 'err_code':'002', 'description': 'SHORTENED URL NOT FOUND.'}, status=404)
         else:
-           return JsonResponse({'url': shortened_url, 'err_code':'003', 'description': 'URL is required.'}, status=400) 
+           return JsonResponse({'alias': alias, 'err_code':'003', 'description': 'alias is required.'}, status=400) 
     except:
         return JsonResponse({'Error':'Internal server error :('}, status=500)
 
