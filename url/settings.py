@@ -76,15 +76,24 @@ WSGI_APPLICATION = 'url.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#    'default': {
+#       'ENGINE' : 'djongo',
+#        'NAME' : 'shortener_url',
+#        'HOST' :'mongodb+srv://userapi:VPIp5KCz5pMySlVM@cluster-ybuif.mongodb.net/admin?retryWrites=true&w=majority',
+#        'USER' : 'userapi',
+#        'ENFORCE_SCHEMA': False,
+#        'PASSWORD' : 'VPIp5KCz5pMySlVM',
+#    }
+# }
+
 DATABASES = {
-   'default': {
-      'ENGINE' : 'djongo',
-       'NAME' : 'shortener_url',
-       'HOST' :'mongodb+srv://userapi:VPIp5KCz5pMySlVM@cluster-ybuif.mongodb.net/admin?retryWrites=true&w=majority',
-       'USER' : 'userapi',
-       'ENFORCE_SCHEMA': False,
-       'PASSWORD' : 'VPIp5KCz5pMySlVM',
-   }
+    'default': {
+        'ENGINE': 'djongo',
+        'HOST': 'db',
+        'NAME' : 'shortener_url',
+        'ENFORCE_SCHEMA': False,
+    },
 }
 
 

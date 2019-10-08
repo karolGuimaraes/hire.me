@@ -18,7 +18,7 @@ def create_shortener(request):
                 else:
                     shortened_url = "http://shortener/u/{}".format( custom_alias )
             else:
-                custom_alias = hashlib.sha256( str( Url.objects.all().last()._id ).encode('utf-8') ).hexdigest()[:6] 
+                custom_alias = hashlib.sha256( str( Url.objects.all().count() ).encode('utf-8') ).hexdigest()[:6] 
                 shortened_url = "http://shortener/u/{}".format( custom_alias )
  
             Url.objects.create(original_url=url, custom_alias=custom_alias, shortened_url=shortened_url)

@@ -1,5 +1,12 @@
 version: '3'
 services:
+  db:
+    image: mongo:4.2.0
+    restart: always
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
   api:
     build: .
     command: >
@@ -9,3 +16,5 @@ services:
       - .:/env
     ports: 
       - "8000:8000"
+    links:
+      - db
